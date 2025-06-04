@@ -1,0 +1,31 @@
+#include <iostream>
+using namespace std;
+
+int sum(int arr[]) {
+    int total = 0;
+    for (int i = 0; i < 5; i++) { //배열 크기를 5로 고정
+        total += arr[i];
+    }
+    return total;
+}
+
+double avr(int arr[]) {
+    int total = sum(arr);        //합 구하기
+    return (double)total / 5;   //평균 = 합 / 5
+}
+
+int main() {
+    int numbers[5];             //숫자 5개 저장
+
+    cout << "숫자 5개 입력: ";
+    for (int i = 0; i < 5; i++) {
+        cin >> numbers[i];
+    }
+
+    int total = sum(numbers);         
+    double average = avr(numbers);   
+
+    cout << "합: " << total << " 평균: " << average << endl;
+
+    return 0;
+}
