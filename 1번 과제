@@ -1,0 +1,36 @@
+#include <iostream>
+using namespace std;
+
+// 합계 함수
+int getSum(int arr[], int size) {
+    int sum = 0;
+    for (int i = 0; i < size; i++) {
+        sum += arr[i];
+    }
+    return sum;
+}
+
+// 평균 함수
+double getAverage(int arr[], int size) {
+    int sum = getSum(arr, size);
+    return (double)sum / size;
+}
+
+int main() {
+    int numbers[5]; // 숫자 5개 저장
+    int sum = 0;    // 합계 저장
+
+    cout << "숫자 5개를 입력: ";
+
+    for (int i = 0; i < 5; i++) {
+        cin >> numbers[i]; // 숫자 입력
+        sum += numbers[i]; // 입력 후 더하기
+    }
+
+    double number = (double)sum / 5; // 평균 계산
+
+    cout << "합: " << sum << endl;
+    cout << "평균: " << number << endl;
+
+    return 0;
+}
