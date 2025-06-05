@@ -11,21 +11,21 @@ public:
 class Dog : public Animal {
 public:
     void makeSound() override {
-        cout << "Dog barks: 월월 " << endl;
+        cout << "Dog : 월월 " << endl;
     }
 };
 
 class Cat : public Animal {
 public:
     void makeSound() override {
-        cout << "Cat meows: 야옹" << endl;
+        cout << "Cat : 야옹" << endl;
     }
 };
 
 class Cow : public Animal {
 public:
     void makeSound() override {
-        cout << "Cow moos: 음머" << endl;
+        cout << "Cow : 음머" << endl;
     }
 };
 
