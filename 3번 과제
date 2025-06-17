@@ -3,71 +3,64 @@
 
 using namespace std;
 
-template <typename T>
-class SimpleVector
+template <typename T> //타입을 나중에 결정
+class SimpleVector //벡터 클래스 이름
 {
 private:
-	T* data;
-	int currentSize;
-	int currentCapacity;
+	T* data; //실제 데이터를 담는 배열
+	int currentSize; //현재까지 저장된 원소 개수
+	int currentCapacity; //배열의 전체 용량(처음 만든 크기)
 
 public:
 	SimpleVector()
 	{
-		data = new T[10];
-		currentSize = 0;
-		currentCapacity = 10;
+		data = new T[10]; //크기 10자리 배열을 동적으로 생성
+		currentSize = 0; // 처음에는 아무것도 안넣음
+		currentCapacity = 10; // 최대 10개 넣을 수 있다
 	}
 
-	SimpleVector(int capacity)
+	SimpleVector(int capacity) //사용자가 원하는 크기를 넣어서 생성할 수 있다
 	{
 		data = new T[capacity];
 		currentSize = 0;
 		currentCapacity = capacity;
 	}
 
-	SimpleVector(const SimpleVector& other)
+	~SimpleVector() //객체가 소멸될 때 호출
 	{
-		currentSize = other.currentSize;
-		currentCapacity = other.currentCapacity;
-		data = other.data;
+		delete[] data; //동적으로 할당한 배열 메모리를 해제해서 메모리 누수 방지
+		data = nullptr; //포인터 초기화
 	}
 
-
-	~SimpleVector()
+	// 연산자 오버로딩
+	T& operator[](int index) //[] 연산자를 사용할 수 있게 만들기
 	{
-		delete[] data;
-		data = nullptr;
+		return data[index];
 	}
 
-	T& operator[](int index)
+	void push_back(const T& value) //push_back(값)을 호출하면 배열 뒤에 값을 추가
 	{
-		return data[index]
-	}
-
-
-	void push_back(const T& value)
-	{
-		if (currentSize >= currentCapacity)
+		if (currentSize >= currentCapacity) //배열이 꽉 찼으면 (currentSize >= currentCapacity) 동작 없이 바로 종료
 		{
 			return;
 		}
 
-		data[currentSize] = value;
-		++currentSize
+		data[currentSize] = value; //값이 들어갈 수 있으면 data[currentSize] = value;로 저장하고 크기 하나 증가
+		++currentSize;
 	}
 
-	void pop_back()
+	void pop_back() //마지막 요소 하나 제거
 	{
 		--currentSize;
 	}
 
-	int size()
+	int size() const //현재까지 저장된 원소의 개수 반환
+		//const는 이 함수가 멤버변수를 바꾸지 않는다는 약속
 	{
 		return currentSize;
 	}
 
-	int capacity()
+	int capacity() const //처음 설정한 배열의 전체 크기(고정된 크기) 반환
 	{
 		return currentCapacity;
 	}
@@ -76,24 +69,24 @@ public:
 
 int main()
 {
+	// 힙 메모리 누수를 감지하는 코드
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-	SimpleVector<int> sv1;
+	SimpleVector<int> sv1; //int형 원소를 저장하는 SimpleVector 객체 생성 (기본 생성자 사용)
 
-	sv1.push_back(5);
+	sv1.push_back(5); //5, 6, 7을 벡터에 차례대로 추가
 	sv1.push_back(6);
 	sv1.push_back(7);
 
-	sv1.pop_back();
+	sv1.pop_back(); //마지막으로 넣은 7을 제거 → 현재 남은 값: 5, 6
 
-	for (int i = 0; i < sv1.size(); ++i)
+	for (int i = 0; i < sv1.size(); ++i) //벡터에 저장된 값을 출력 operator[] 덕분에 배열처럼 접근 가능
 	{
-		cout << "백터 1의: " << "번째 요소" << sv1[i] << endl;
+		cout << "벡터 1의: " << i << "번째 요소 " << sv1[i] << endl;
 	}
 
-	cout << "백터 1의 크기: " << sv1.size() << endl;
-	cout << "백터 1의 용량: " << sv1.capacity() << endl;
+	cout << "벡터 1의 크기: " << sv1.size() << endl;		//현재 저장된 개수(size)와 배열의 총 크기(capacity) 출력
+	cout << "벡터 1의 용량: " << sv1.capacity() << endl;
 
-	cout << "| n==========================" << endl;
-
+	cout << "\n============================" << endl;
 }
